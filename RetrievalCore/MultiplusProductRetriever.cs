@@ -21,25 +21,39 @@ namespace RetrievalCore
             var productRaw = new ProductRawData();
 
             var searchWebPage = new HtmlWeb();
-            var searchDocument = searchWebPage.Load(searchUrl + SearchEncode(product.Description));
+            var searchDocument = searchWebPage.Load(searchUrl + product.Description); // SearchEncode(product.Description));
             var searchResultNodes = searchDocument.DocumentNode.SelectNodes("//ul[contains(@class, 'lista-cartelas')]");
-            foreach (var node in searchResultNodes)
+            if (searchResultNodes == null)
             {
-                var urlNode = node.SelectSingleNode("//ul[contains(@class, 'lista-cartelas')]//a[not(@class)]");
+                Console.WriteLine($"Produto {product.Sku} não encontrado");
+            }
+            else
+            {
+                foreach (var node in searchResultNodes)
+                {
+                    var urlNode = node.SelectSingleNode("//ul[contains(@class, 'lista-cartelas')]//a[not(@class)]");
 
-                productRaw.Url = baseUrl + urlNode.Attributes["href"].Value;
+                    LoadProductDetails(productRaw, baseUrl + urlNode.Attributes["href"].Value);
 
-                Console.WriteLine(productRaw.Url);
-                //var detailWebPage = new HtmlWeb();
-                //var detailDocument = detailWebPage.Load(productRaw.Url);
-
+                    Console.WriteLine(productRaw.Url);
+                }
             }
             return productRaw;
         }
 
+        private void LoadProductDetails(ProductRawData productRaw, string url)
+        {
+            productRaw.Url = url;
+            var detailWebPage = new HtmlWeb();
+            var detailDocument = detailWebPage.Load(productRaw.Url);
+
+            productRaw.Description = detailDocument.DocumentNode.SelectSingleNode("//h1[@class='nome-produto-nome']").InnerText;
+
+        }
+
         private string SearchEncode(string str)
         {
-            return HttpUtility.UrlEncode(str.Replace(' ', '+'));
+            return HttpUtility.UrlEncode(str);
         }
     }
 }

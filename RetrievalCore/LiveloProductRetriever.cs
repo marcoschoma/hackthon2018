@@ -12,7 +12,7 @@ namespace RetrievalCore
     {
         public ProductRawData Get(Product product)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }
