@@ -1,14 +1,14 @@
 ﻿using CrossCutting.Model;
-using CrossCutting.Vendor;
+using CrossCutting.Platform;
 using InputCore;
 using OfficeOpenXml;
+using RetrievalCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VendorCore;
 
 namespace ConsoleApplication
 {
@@ -37,9 +37,9 @@ namespace ConsoleApplication
                 Console.WriteLine($"{products.Count()} produtos encontrados");
             }
 
-            var vendorRetrievers = new List<IVendorProductRetriever>
+            var vendorRetrievers = new List<IPlatformProductRetriever>
             {
-                new MultiplusVendorProductRetriever()
+                new MultiplusProductRetriever()
             };
 
             if (products != null)

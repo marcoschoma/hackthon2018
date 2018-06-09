@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrossCutting.Vendor
+namespace CrossCutting.Platform
 {
-    public interface IVendorProductRetriever
+    public interface IPlatformProductRetriever
     {
         ProductRawData Get(Product product);
 

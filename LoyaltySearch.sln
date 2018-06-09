@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossCutting", "CrossCuttin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication", "ConsoleApplication\ConsoleApplication.csproj", "{164B190F-88DA-4A26-851D-31BE8266B50D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendorCore", "VendorCore\VendorCore.csproj", "{0A278D70-F5A2-44E2-A07C-20C88539AD3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetrievalCore", "RetrievalCore\RetrievalCore.csproj", "{0A278D70-F5A2-44E2-A07C-20C88539AD3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

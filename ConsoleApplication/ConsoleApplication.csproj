@@ -68,9 +68,9 @@
       <Project>{6ACCFB02-56A9-4C63-A5E8-798E061AC43F}</Project>
       <Name>InputCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VendorCore\VendorCore.csproj">
+    <ProjectReference Include="..\RetrievalCore\RetrievalCore.csproj">
       <Project>{0A278D70-F5A2-44E2-A07C-20C88539AD3F}</Project>
-      <Name>VendorCore</Name>
+      <Name>RetrievalCore</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
