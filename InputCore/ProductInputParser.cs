@@ -13,18 +13,28 @@ namespace InputCore
     {
         public Product GetProduct(ProductRawData productRaw)
         {
-            return new Product()
-            {
-                Brand = productRaw.Brand,
-                Vendor = productRaw.Vendor,
-                Url = productRaw.Url,
-                Sku = productRaw.Sku,
-                Discount = decimal.Parse(productRaw.Discount, NumberStyles.Any, CultureInfo.CurrentCulture),
-                Description = productRaw.Description,
-                CostPriceInPoints = decimal.Parse(productRaw.CostPriceInPoints, NumberStyles.Any, CultureInfo.CurrentCulture),
-                CostPriceFrom = decimal.Parse(productRaw.CostPriceFrom, NumberStyles.Any, CultureInfo.CurrentCulture),
-                CostPrice = decimal.Parse(productRaw.CostPrice, NumberStyles.Any, CultureInfo.CurrentCulture),
-            };
+            var product = new Product();
+            product.Brand = productRaw.Brand;
+            product.Vendor = productRaw.Vendor;
+            product.Url = productRaw.Url;
+            product.Sku = productRaw.Sku;
+            product.Description = productRaw.Description;
+
+            decimal discount;
+            decimal costPriceInPoints;
+            decimal costPriceFrom;
+            decimal costPrice;
+
+            if (decimal.TryParse(productRaw.Discount, out discount)) product.Discount = discount;
+            if (decimal.TryParse(productRaw.CostPriceInPoints, out costPriceInPoints)) product.CostPriceInPoints = costPriceInPoints;
+            if (decimal.TryParse(productRaw.CostPriceFrom, out costPriceFrom)) product.CostPriceFrom = costPriceFrom;
+            if (decimal.TryParse(productRaw.CostPrice, out costPrice)) product.CostPrice = costPrice;
+
+            //product.Discount = decimal.Parse(, NumberStyles.Any, CultureInfo.CurrentCulture);
+            //product.CostPriceInPoints = decimal.Parse(productRaw.CostPriceInPoints, NumberStyles.Any, CultureInfo.CurrentCulture);
+            //product.CostPriceFrom = decimal.Parse(productRaw.CostPriceFrom, NumberStyles.Any, CultureInfo.CurrentCulture);
+            //product.CostPrice = decimal.Parse(productRaw.CostPrice, NumberStyles.Any, CultureInfo.CurrentCulture);
+            return product;
         }
     }
 }

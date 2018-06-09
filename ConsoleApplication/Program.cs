@@ -1,10 +1,13 @@
 ﻿using CrossCutting.Model;
 using CrossCutting.Platform;
+using Infra.DataAccess;
 using InputCore;
+using MongoDB.Driver;
 using OfficeOpenXml;
 using RetrievalCore;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,19 +25,28 @@ namespace ConsoleApplication
             else
                 filePath = args[0];
 
+            var mongoClient = new MongoClient(ConfigurationManager.ConnectionStrings["defaultCS"].ConnectionString);
+            var mongoDatabase = mongoClient.GetDatabase("MongoWebApp");
+
+            var repository = new ProductRepository(mongoDatabase);
+
             IEnumerable<Product> products = null;
+            var productInputParser = new ProductInputParser();
 
             var existingFile = new FileInfo(filePath);
             using (var package = new ExcelPackage(existingFile))
             {
                 var worksheet = package.Workbook.Worksheets[1];
                 var productListReader = new ProductListReader(worksheet);
-                var productInputParser = new ProductInputParser();
 
                 productListReader.LoadProductList();
                 products = productListReader.GetData(productInputParser);
 
                 Console.WriteLine($"{products.Count()} produtos encontrados");
+                //foreach (var product in products)
+                //{
+                //    repository.Save(product);
+                //}
             }
 
             var vendorRetrievers = new List<IPlatformProductRetriever>
@@ -51,6 +63,8 @@ namespace ConsoleApplication
                     foreach (var vendorRetriever in vendorRetrievers)
                     {
                         var productRaw = vendorRetriever.Get(product);
+
+                        //repository.Save(productInputParser.GetProduct(productRaw));
                     }
                 }
             }
