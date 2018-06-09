@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputCore", "InputCore\Inpu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossCutting", "CrossCutting\CrossCutting.csproj", "{2E8FA504-2399-4074-964C-B7BB4C72CB5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication", "ConsoleApplication\ConsoleApplication.csproj", "{164B190F-88DA-4A26-851D-31BE8266B50D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendorCore", "VendorCore\VendorCore.csproj", "{0A278D70-F5A2-44E2-A07C-20C88539AD3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{2E8FA504-2399-4074-964C-B7BB4C72CB5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E8FA504-2399-4074-964C-B7BB4C72CB5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E8FA504-2399-4074-964C-B7BB4C72CB5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{164B190F-88DA-4A26-851D-31BE8266B50D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{164B190F-88DA-4A26-851D-31BE8266B50D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{164B190F-88DA-4A26-851D-31BE8266B50D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{164B190F-88DA-4A26-851D-31BE8266B50D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A278D70-F5A2-44E2-A07C-20C88539AD3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A278D70-F5A2-44E2-A07C-20C88539AD3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A278D70-F5A2-44E2-A07C-20C88539AD3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A278D70-F5A2-44E2-A07C-20C88539AD3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -40,10 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Input\IProductInputParser.cs" />
+    <Compile Include="Input\IProductListReader.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductRawData.cs" />
     <Compile Include="Model\ProductRawOutput.cs" />
+    <Compile Include="Output\IProductOutputParser.cs" />
+    <Compile Include="Persistence\IProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vendor\IVendorProductRetriever.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
