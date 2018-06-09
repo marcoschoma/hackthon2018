@@ -19,6 +19,7 @@ namespace InputCore
             product.Url = productRaw.Url;
             product.Sku = productRaw.Sku;
             product.Description = productRaw.Description;
+            product.Platform = productRaw.Platform;
 
             decimal discount;
             decimal costPriceInPoints;

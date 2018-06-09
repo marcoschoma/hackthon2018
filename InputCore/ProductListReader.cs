@@ -44,6 +44,7 @@ namespace InputCore
                 productRawData.Discount = _worksheet.Cells[row, 8].Value.ToString();
                 productRawData.Vendor = _worksheet.Cells[row, 9].Value.ToString();
                 productRawData.Url = _worksheet.Cells[row, 10].Value.ToString();
+                productRawData.Platform = "excel-import";
                 _productRawDataList.Add(productRawData);
             }
         }

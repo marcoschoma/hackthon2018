@@ -19,5 +19,6 @@ namespace CrossCutting.Model
         public string Discount { get; set; }
         public string Vendor { get; set; }
         public string Url { get; set; }
+        public string Platform { get; set; }
     }
 }

@@ -10,9 +10,10 @@ using System.Threading.Tasks;
 
 namespace Infra.DataAccess
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : IRepository<Product>
     {
         private IMongoDatabase _db;
+        protected string CollectionName = "Product";
 
         public ProductRepository(IMongoDatabase db)
         {
@@ -21,7 +22,7 @@ namespace Infra.DataAccess
 
         public void Save(Product product)
         {
-            var collection = _db.GetCollection<Product>("Product");
+            var collection = _db.GetCollection<Product>(CollectionName);
             collection.ReplaceOne(
                 filter: new BsonDocument("Sku", product.Sku),
                 options: new UpdateOptions { IsUpsert = true },

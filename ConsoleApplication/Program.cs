@@ -29,6 +29,7 @@ namespace ConsoleApplication
             var mongoDatabase = mongoClient.GetDatabase("MongoWebApp");
 
             var repository = new ProductRepository(mongoDatabase);
+            var repositoryRaw = new ProductRawRepository(mongoDatabase);
 
             IEnumerable<Product> products = null;
             var productInputParser = new ProductInputParser();
@@ -43,10 +44,10 @@ namespace ConsoleApplication
                 products = productListReader.GetData(productInputParser);
 
                 Console.WriteLine($"{products.Count()} produtos encontrados");
-                //foreach (var product in products)
-                //{
-                //    repository.Save(product);
-                //}
+                foreach (var product in products)
+                {
+                    repository.Save(product);
+                }
             }
 
             var vendorRetrievers = new List<IPlatformProductRetriever>
@@ -64,6 +65,7 @@ namespace ConsoleApplication
                     {
                         var productRaw = vendorRetriever.Get(product);
 
+                        repositoryRaw.Save(productRaw);
                         //repository.Save(productInputParser.GetProduct(productRaw));
                     }
                 }
