@@ -31,7 +31,7 @@ namespace InputCore
 
         public void LoadProductList()
         {
-            for (int row = 3; _worksheet.Cells[row, 1].Value != null; row++)
+            for (int row = 12; _worksheet.Cells[row, 1].Value != null; row++)
             {
                 var productRawData = new ProductRawData();
                 productRawData.Description = _worksheet.Cells[row, 1].Value.ToString();
