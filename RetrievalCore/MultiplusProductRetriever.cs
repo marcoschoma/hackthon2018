@@ -22,7 +22,6 @@ namespace RetrievalCore
 
             var searchWebPage = new HtmlWeb();
             var searchDocument = searchWebPage.Load(searchUrl + SearchEncode(product.Description));
-
             var searchResultNodes = searchDocument.DocumentNode.SelectNodes("//ul[contains(@class, 'lista-cartelas')]");
             foreach (var node in searchResultNodes)
             {
@@ -30,9 +29,9 @@ namespace RetrievalCore
 
                 productRaw.Url = baseUrl + urlNode.Attributes["href"].Value;
 
-                var detailWebPage = new HtmlWeb();
-                var detailDocument = detailWebPage.Load(productRaw.Url);
-
+                Console.WriteLine(productRaw.Url);
+                //var detailWebPage = new HtmlWeb();
+                //var detailDocument = detailWebPage.Load(productRaw.Url);
 
             }
             return productRaw;
