@@ -52,8 +52,8 @@ namespace ConsoleApplication
 
             var vendorRetrievers = new List<IPlatformProductRetriever>
             {
-                new MultiplusProductRetriever(),
-                new LiveloProductRetriever(),
+                //new MultiplusProductRetriever(),
+                //new LiveloProductRetriever(),
                 new SmilesProductRetriever()
             };
 
