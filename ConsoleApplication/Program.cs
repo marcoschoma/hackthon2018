@@ -50,24 +50,39 @@ namespace ConsoleApplication
                 }
             }
 
-            var vendorRetrievers = new List<IPlatformProductRetriever>
+            var platformRetrievers = new List<IPlatformProductRetriever>
             {
-                //new MultiplusProductRetriever(),
-                //new LiveloProductRetriever(),
-                new SmilesProductRetriever()
+                new SmilesProductRetriever(),
+                new MultiplusProductRetriever(),
+                new LiveloProductRetriever(),
             };
 
             if (products != null)
             {
                 foreach (var product in products)
                 {
-                    foreach (var vendorRetriever in vendorRetrievers)
+                    foreach (var platformRetriever in platformRetrievers)
                     {
-                        var productRaw = vendorRetriever.Get(product);
+                        try
+                        {
 
-                        repositoryRaw.Save(productRaw);
-                        //repository.Save(productInputParser.GetProduct(productRaw));
+                            var productsRetrieved = platformRetriever.Get(product);
+
+                            if (productsRetrieved != null)
+                            {
+                                if (product.PlatformProducts == null)
+                                    product.PlatformProducts = new List<ProductRawData>();
+
+                                product.PlatformProducts.AddRange(productsRetrieved);
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Erro ao buscar sku {product.Sku}:" + ex.Message);
+                        }
                     }
+                    repository.Save(product);
                 }
             }
 

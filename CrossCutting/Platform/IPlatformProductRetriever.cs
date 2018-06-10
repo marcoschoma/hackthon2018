@@ -9,7 +9,7 @@ namespace CrossCutting.Platform
 {
     public interface IPlatformProductRetriever
     {
-        ProductRawData Get(Product product);
+        IList<ProductRawData> Get(Product product);
 
     }
 }

@@ -9,39 +9,45 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-
 namespace RetrievalCore
 {
     public class SmilesProductRetriever : IPlatformProductRetriever
     {
+        private const string PlatformName = "Smiles";
         private const string baseUrl = "https://www.shoppingsmiles.com.br/smiles/";
         private string searchUrl = baseUrl + "/super_busca.jsf?b=";
 
-        public ProductRawData Get(Product product)
+        public IList<ProductRawData> Get(Product product)
         {
-            var productRaw = new ProductRawData();
+            var result = new List<ProductRawData>();
 
             var searchWebPage = new HtmlWeb();
-            //recover the description of the product from the inserted .xml
-            //and insert as a param to the search index
-            var searchDocument = searchWebPage.Load(searchUrl + product.Description); // SearchEncode(product.Description));
-            var searchResultNodes = searchDocument.DocumentNode.SelectNodes("//*/span[@class='itens-section']");            
+            var searchDocument = searchWebPage.Load(searchUrl + product.Description + "&a=false"); // SearchEncode(product.Description));
+            var searchResultNodes = searchDocument.DocumentNode.SelectNodes("//*/span[@class='itens-section']/a");            
             if (searchResultNodes == null)
             {
                 Console.WriteLine($"Produto {product.Sku} não encontrado");
+                return null;// buscar apenas por códigos [a-zA-Z0-9].?[0-9][0-9]
             }
             else
             {
                 foreach (var node in searchResultNodes)
                 {
-                    var urlNode = node.SelectSingleNode("a");
+                    var productRaw = new ProductRawData();
+                    var url = node.Attributes["href"].DeEntitizeValue;
+                    productRaw.Url = baseUrl + url;
 
-                    LoadProductDetails(productRaw, baseUrl + urlNode.Attributes["href"].Value);
+                    productRaw.Sku = GetSkuFromUrl(productRaw.Url);
+                    productRaw.Vendor = GetVendorFromSKU(productRaw.Sku);
+                    productRaw.Platform = PlatformName;
 
-                    Console.WriteLine(productRaw.Url);
+                    productRaw.CostPriceFrom = node.SelectSingleNode("//span[@class='block-from-price-value']").InnerText;
+                    productRaw.CostPrice = node.SelectSingleNode("//span[@class='item-main-pricing']").InnerText;
+
+                    result.Add(productRaw);
                 }
             }
-            return productRaw;
+            return result;
         }
 
         private void LoadProductDetails(ProductRawData productRaw, string url)
@@ -50,17 +56,38 @@ namespace RetrievalCore
             var detailWebPage = new HtmlWeb();
             var detailDocument = detailWebPage.Load(productRaw.Url);
 
-            productRaw.Description = detailDocument.DocumentNode.SelectSingleNode("//h1[@class='plain-name']").InnerText;
+            var descriptionNode = detailDocument.DocumentNode.SelectSingleNode("//*[@id='produto:formProduto:produtoNome']");
+            if (descriptionNode == null)
+                return;
 
+            productRaw.Description = descriptionNode?.InnerText;
+            
+            productRaw.CostPriceFrom = detailDocument.DocumentNode.SelectSingleNode("//span[contains(@class, 'produto-reference-price')]/strike").InnerText;
+            productRaw.CostPrice = detailDocument.DocumentNode.SelectSingleNode("//span[contains(@class, 'produto-reference-price')]/span[@class='preco-reais-acumulo']").InnerText;
         }
 
-        /*public void LoadProductPrice() {
-
-        }*/
-
-        private string SearchEncode(string str)
+        private string GetSkuFromUrl(string url)
         {
-            return HttpUtility.UrlEncode(str);
+            var startIndex = url.IndexOf("&p=");
+
+            var sku = url.Substring(startIndex+3);
+
+            return sku.Substring(0, sku.IndexOf("&"));
+        }
+
+        private string GetVendorFromSKU(string sku)
+        {
+            switch (sku[sku.Length-1])
+            {
+                case '3':
+                    return "Extra";
+                case '4':
+                    return "Ponto Frio";
+                case '7':
+                    return "Casas Bahia";
+                default:
+                    return null;
+            }
         }
     }
 }
